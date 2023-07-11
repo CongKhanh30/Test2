@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Check {
     public static final String PRODUCT_ID = "^[p|P]\\d+$";
-    public static final String STRING = "^[\\w,\\s]+$";
+    public static final String STRING = "^[\\p{L}\\p{M}\\s\\d]+$";
     private Scanner scanner = new Scanner(System.in);
 
     public int checkInputNumber(String str) {

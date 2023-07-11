@@ -1,4 +1,4 @@
-package IOFile;
+package readAndWriteFile;
 
 import model.Product;
 
@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IOProducts {
+public class ReadAndWriteProducts {
     File file = new File("F:\\CodeGYM\\Products\\data\\products.csv");
 
     public void writeFile(List<Product> productList) throws IOException {

@@ -4,49 +4,16 @@ import check.Check;
 import management.ProductManagement;
 import model.Product;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class ProductMenu {
     private ProductManagement productManagement = new ProductManagement();
     private Check check = new Check();
+    private Scanner scanner = new Scanner(System.in);
 
     public void showAllProducts() {
         System.out.println("***** Danh Sách Sản Phẩm *****");
-//        for (Product product : productManagement.getAll()) {
-//            System.out.println(product.toString());
-//            System.out.println("**********");
-//        }
-//        System.out.println("//////////");
-//        int start = 0;
-//        int count = 0;
-//        int num = 0;
-//
-//        while (count < productManagement.getAll().size()) {
-//            while (num < start + 5) {
-//                System.out.println(productManagement.getAll().get(num));
-//                System.out.println("----------");
-//                num++;
-//                count++;
-//            }
-//            System.out.println("-----");
-//            start++;
-//            num = start + 4;
-//        }
-
-//        int start = 1;
-//        int count = 0;
-//
-//        while (count < productManagement.getAll().size()) {
-//            int num = start;
-//            while (num < start + 5) {
-//                System.out.println(productManagement.getAll().get(num - 1));
-//                num++;
-//            }
-//            System.out.println();
-//            start += 5;
-//            count++;
-//        }
-
         int start = 1;
         int count = 0;
 
@@ -57,7 +24,7 @@ public class ProductMenu {
                 System.out.println("--------");
                 num++;
             }
-            System.out.println("Enter");
+            System.out.println("Nhấn Enter để hiển thị thông tin sản phẩm: ");
             Scanner scanner = new Scanner(System.in);
             scanner.nextLine();
             start += 5;
@@ -70,7 +37,7 @@ public class ProductMenu {
         System.out.println("+++++ Thêm Sản Phẩm +++++");
         String productId;
         while (true) {
-            String str = "Nhập ID Sản Phẩm(vd: p01/P01): ";
+            String str = "Nhập ID Sản Phẩm(p1/P1): ";
             productId = check.checkRegex(str, Check.PRODUCT_ID);
             if (productManagement.findIndexById(productId) == -1) {
                 break;
@@ -113,10 +80,67 @@ public class ProductMenu {
     }
 
     public void updateProduct() {
+        System.out.println("+++++ Sửa Thông Tin Sản Phẩm +++++");
 
+        String str = "Nhập ID Sản Phẩm(p1/P1): ";
+        String productId = check.checkRegex(str, Check.PRODUCT_ID);
+        if (productManagement.findIndexById(productId) == -1) {
+            System.out.println("Không Tìm Được Sản Phẩm Với Mã Sản Phẩm Trên !!!");
+        } else {
+            System.out.println("----------");
+            System.out.println(productManagement.getAll().get(productManagement.findIndexById(productId)).toString());
+            System.out.println("----------");
+
+            String productName;
+            while (true) {
+                String str1 = "Nhập Tên Sản Phẩm: ";
+                productName = check.checkRegex(str1, Check.STRING);
+                break;
+            }
+
+            double price;
+            while (true) {
+                String str2 = "Nhập Giá Sản Phẩm: ";
+                price = check.checkInputNumber(str2);
+                break;
+            }
+
+            int quantity;
+            while (true) {
+                String str3 = "Nhập Số Lượng Sản Phẩm: ";
+                quantity = check.checkInputNumber(str3);
+                break;
+            }
+
+            String detail;
+            while (true) {
+                String str4 = "Nhập Mô Tả Sản Phẩm: ";
+                detail = check.checkRegex(str4, Check.STRING);
+                break;
+            }
+
+            Product product = new Product(productId, productName, price, quantity, detail);
+            productManagement.edit(productId, product);
+
+            System.out.println("//////////");
+        }
     }
 
     public void deleteProduct() {
+        System.out.println("+++++ Xóa Sản Phẩm +++++");
+        String productId;
+            String str;
+            str = "Nhập ID Sản Phẩm muốn xóa(p1/P1): ";
+            productId = check.checkRegex(str, Check.PRODUCT_ID);
+            if (productManagement.findIndexById(productId) == -1) {
+                System.out.println("Không tìm thấy ID sản phẩm vừa nhập !!!");
+            } else {
+                System.out.println("Bạn có muốn xóa sản phẩm này (Nhập y để xóa)");
+                String select = scanner.nextLine();
+                if (select.equalsIgnoreCase("y")) {
+                    productManagement.delete(productId);
+                }
+            }
 
     }
 
@@ -163,7 +187,7 @@ public class ProductMenu {
     }
 
     public void mostExpensiveProduct() {
-        System.out.println("%%%%% Tìm Sản Phẩm Có Giá Đắt Nhất %%%%%");
+        System.out.println("+++++ Tìm Sản Phẩm Có Giá Đắt Nhất +++++");
         for (Product product : productManagement.getAll()) {
             if (product.getPrice() == productManagement.sortDecProduct().get(0).getPrice()) {
                 System.out.println(product.toString());
@@ -172,11 +196,4 @@ public class ProductMenu {
         }
     }
 
-    public void readFile() {
-
-    }
-
-    public void writeFile() {
-
-    }
 }

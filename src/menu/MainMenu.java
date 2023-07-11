@@ -17,9 +17,7 @@ public class MainMenu {
                     "4. Xóa\n" +
                     "5. Sắp xếp\n" +
                     "6. Tìm sản phẩm có giá đắt nhất\n" +
-                    "7. Đọc từ file\n" +
-                    "8. Ghi vào file\n" +
-                    "9. Thoát";
+                    "7. Thoát";
 
             System.out.println(menu);
             System.out.println("----------");
@@ -47,18 +45,12 @@ public class MainMenu {
                     productMenu.mostExpensiveProduct();
                     break;
                 case 7:
-                    productMenu.readFile();
-                    break;
-                case 8:
-                    productMenu.writeFile();
-                    break;
-                case 9:
                     break;
                 default:
-                    System.out.println("Không Có Lựa Chọn !!!");
+                    System.out.println("Lựa chọn bạn nhập hiện tại chưa có. Mời bạn nhập lại lựa chọn từ 1 => 7");
                     System.out.println("----------");
                     break;
             }
-        } while (choice != 9);
+        } while (choice != 7);
     }
 }

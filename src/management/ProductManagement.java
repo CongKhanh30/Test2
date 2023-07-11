@@ -1,6 +1,6 @@
 package management;
 
-import IOFile.IOProducts;
+import readAndWriteFile.ReadAndWriteProducts;
 import management.iManagement.Management;
 import model.Product;
 
@@ -10,11 +10,11 @@ import java.util.List;
 
 public class ProductManagement implements Management<Product> {
     private List<Product> productList = null;
-    private IOProducts ioProducts = new IOProducts();
+    private ReadAndWriteProducts readAndWriteProducts = new ReadAndWriteProducts();
 
     public ProductManagement() {
         try {
-            this.productList = ioProducts.readFile();
+            this.productList = readAndWriteProducts.readFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -23,10 +23,10 @@ public class ProductManagement implements Management<Product> {
     @Override
     public void add(Product product) {
         try {
-            this.productList = ioProducts.readFile();
+            this.productList = readAndWriteProducts.readFile();
 
             this.productList.add(product);
-            this.ioProducts.writeFile(this.productList);
+            this.readAndWriteProducts.writeFile(this.productList);
 
             System.out.println("Thêm Sản Phẩm Thành Công !!!");
         } catch (IOException e) {
@@ -37,12 +37,12 @@ public class ProductManagement implements Management<Product> {
     @Override
     public void edit(String id, Product product) {
         try {
-            this.productList = this.ioProducts.readFile();
+            this.productList = this.readAndWriteProducts.readFile();
 
             int index = findIndexById(id);
             if (index != -1) {
                 this.productList.set(index, product);
-                this.ioProducts.writeFile(this.productList);
+                this.readAndWriteProducts.writeFile(this.productList);
 
                 System.out.println("Sửa Sản Phẩm Thành Công !!!");
             } else {
@@ -56,12 +56,12 @@ public class ProductManagement implements Management<Product> {
     @Override
     public void delete(String id) {
         try {
-            this.productList = this.ioProducts.readFile();
+            this.productList = this.readAndWriteProducts.readFile();
 
             int index = findIndexById(id);
             if (index != -1) {
                 this.productList.remove(index);
-                this.ioProducts.writeFile(this.productList);
+                this.readAndWriteProducts.writeFile(this.productList);
 
                 System.out.println("Xóa Sản Phẩm Thành Công !!!");
             } else {
@@ -75,7 +75,7 @@ public class ProductManagement implements Management<Product> {
     @Override
     public int findIndexById(String id) {
         try {
-            this.productList = this.ioProducts.readFile();
+            this.productList = this.readAndWriteProducts.readFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +90,7 @@ public class ProductManagement implements Management<Product> {
     @Override
     public List<Product> getAll() {
         try {
-            return this.productList = this.ioProducts.readFile();
+            return this.productList = this.readAndWriteProducts.readFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -99,7 +99,7 @@ public class ProductManagement implements Management<Product> {
 
     public List<Product> sortAscProduct() {
         try {
-            this.productList = this.ioProducts.readFile();
+            this.productList = this.readAndWriteProducts.readFile();
             this.productList.sort(Comparator.comparingDouble(Product::getPrice));
             return this.productList;
         } catch (IOException e) {
@@ -110,7 +110,7 @@ public class ProductManagement implements Management<Product> {
 
     public List<Product> sortDecProduct() {
         try {
-            this.productList = this.ioProducts.readFile();
+            this.productList = this.readAndWriteProducts.readFile();
             this.productList.sort(Comparator.comparingDouble(Product::getPrice).reversed());
             return this.productList;
         } catch (IOException e) {
